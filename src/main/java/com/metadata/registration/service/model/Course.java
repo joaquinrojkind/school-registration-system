@@ -11,8 +11,8 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
-@Table(name = "students")
-public class Student {
+@Table(name = "courses")
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,13 +22,9 @@ public class Student {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "age")
-    private Integer age;
+    @Column(name = "teacher")
+    private String teacher;
 
-    @ManyToMany
-    @JoinTable(
-            name = "student_courses",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private List<Course> courses;
+    @ManyToMany(mappedBy = "courses")
+    private List<Student> students;
 }
