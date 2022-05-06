@@ -1,15 +1,16 @@
-package com.metadata.registration.service.model;
+package com.metadata.registration.persistence.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "students")
 public class Student {
@@ -19,6 +20,9 @@ public class Student {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "uuid", unique = true)
+    private String uuid;
+
     @Column(name = "name")
     private String name;
 
@@ -27,8 +31,8 @@ public class Student {
 
     @ManyToMany
     @JoinTable(
-            name = "student_courses",
+            name = "students_courses",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private List<Course> courses;
+    private List<Course> courses = new ArrayList<>();
 }
