@@ -20,7 +20,7 @@ public class Course {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "uuid", unique = true)
+    @Column(name = "uuid", nullable = false, unique = true)
     private String uuid;
 
     @Column(name = "title")

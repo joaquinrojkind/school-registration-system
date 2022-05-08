@@ -8,9 +8,9 @@ import com.metadata.registration.persistence.model.Student;
 import com.metadata.registration.persistence.repository.CourseRepository;
 import com.metadata.registration.persistence.repository.StudentRepository;
 import com.metadata.registration.service.SchoolRegistrationService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.Collections;
 import java.util.List;

@@ -13,14 +13,14 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     Student findByUuid(String uuid);
 
-//    @Query("select s from Student s join students_courses sc on s.id != sc.student_id")
-    @Query("select s from Student s join Course c on s.id != c.id")
-//    @Query(value = "select * from students s join students_courses sc on s.id != sc.student_id", nativeQuery = true)
+    @Query(value = "select * from students s where (select count(*) from students_courses where student_id = s.id) = 0", nativeQuery = true)
     List<Student> findByEmptyCourses();
 
-//    @Query("select s from students s join students_courses sc on s.id != sc.student_id where sc.course_id = :uuid")
-    @Query("select s from Student s join Course c on s.id = c.id where c.id = :uuid")
-    List<Student> findByCourseUuid(@Param("uuid") String courseUuid);
+    @Query(value = "select * from students s \n" +
+            "join students_courses sc on s.id = sc.student_id\n" +
+            "join courses c on c.id = sc.course_id where c.uuid = :courseUuid ",
+            nativeQuery = true)
+    List<Student> findByCourseUuid(@Param("courseUuid") String courseUuid);
 
     Student deleteByUuid(String uuid);
 }
