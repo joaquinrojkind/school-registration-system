@@ -21,6 +21,4 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             "join courses c on c.id = sc.course_id where c.uuid = :courseUuid ",
             nativeQuery = true)
     List<Student> findByCourseUuid(@Param("courseUuid") String courseUuid);
-
-    Student deleteByUuid(String uuid);
 }

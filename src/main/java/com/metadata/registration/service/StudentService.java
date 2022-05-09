@@ -15,5 +15,11 @@ public interface StudentService {
 
     StudentDto getStudent(String uuid);
 
+    /**
+     * Get a student list using optional filters
+     * @param courseUuid optional filter
+     * @param emptyCourses only students without any courses
+     * @return
+     */
     List<StudentDto> getStudents(String courseUuid, boolean emptyCourses);
 }

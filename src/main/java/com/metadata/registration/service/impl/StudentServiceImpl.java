@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class StudentServiceImpl implements StudentService {
     private StudentMapper studentMapper;
 
     @Override
+    @Transactional
     public StudentDto createStudent(StudentCreationUpdateDto studentCreationUpdateDto) {
         // No courses can be assigned upon creation, there´s a specific api for that
         Student student = Student.builder()
@@ -35,6 +37,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional
     public StudentDto updateStudent(String uuid, StudentCreationUpdateDto studentCreationUpdateDto) {
         // No courses can be assigned upon update, there´s a specific api for that
         Student student = studentRepository.findByUuid(uuid);
@@ -44,8 +47,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional
     public void deleteStudent(String uuid) {
-        studentRepository.deleteByUuid(uuid);
+        Student student = studentRepository.findByUuid(uuid);
+        studentRepository.delete(student);
     }
 
     @Override

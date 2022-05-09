@@ -11,6 +11,8 @@ import com.metadata.registration.service.exception.RegistrationValidationExcepti
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
 
@@ -23,6 +25,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     private CourseRepository courseRepository;
 
     @Override
+    @Transactional
     public void registerToCourse(RegistrationRequestDto registrationRequestDto) {
         Student student = studentRepository.findByUuid(registrationRequestDto.getStudentId());
         Course course = courseRepository.findByUuid(registrationRequestDto.getCourseId());

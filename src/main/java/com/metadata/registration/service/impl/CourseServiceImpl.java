@@ -3,6 +3,7 @@ package com.metadata.registration.service.impl;
 import com.metadata.registration.api.dto.CourseCreationUpdateDto;
 import com.metadata.registration.api.dto.CourseDto;
 import com.metadata.registration.persistence.model.Course;
+import com.metadata.registration.persistence.model.Student;
 import com.metadata.registration.persistence.repository.CourseRepository;
 import com.metadata.registration.service.CourseService;
 import com.metadata.registration.service.mapper.CourseMapper;
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +25,7 @@ public class CourseServiceImpl implements CourseService {
     private CourseMapper courseMapper;
 
     @Override
+    @Transactional
     public CourseDto createCourse(CourseCreationUpdateDto courseCreationUpdateDto) {
         // No students can be assigned upon creation, there´s a specific api for that
         Course course = Course.builder()
@@ -35,6 +38,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public CourseDto updateCourse(String uuid, CourseCreationUpdateDto courseCreationUpdateDto) {
         // No students can be assigned upon update, there´s a specific api for that
         Course course = courseRepository.findByUuid(uuid);
@@ -44,8 +48,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public void deleteCourse(String uuid) {
-        courseRepository.deleteByUuid(uuid);
+        Course course = courseRepository.findByUuid(uuid);
+        courseRepository.delete(course);
     }
 
     @Override
