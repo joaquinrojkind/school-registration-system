@@ -23,12 +23,12 @@ public class Course {
     @Column(name = "uuid", nullable = false, unique = true)
     private String uuid;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false, unique = true)
     private String title;
 
-    @Column(name = "teacher")
+    @Column(name = "teacher", nullable = false)
     private String teacher;
 
     @ManyToMany(mappedBy = "courses")
-    private List<Student> students = new ArrayList<>();
+    private List<Student> students;
 }
